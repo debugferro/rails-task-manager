@@ -1,0 +1,20 @@
+<h1><%= @task.title  %></h1>
+<p><%= @task.details  %></p>
+
+<% status = "Completed" if @task.completed %>
+<% status = "Not completed" unless @task.completed %>
+<% argument = 'checked="checked"' if @task.completed %>
+
+<p>
+  <form method="post" class="edit_task" id="edit_task_2" action=<% "/tasks/#{@task.id}" %>>
+  <strong>Status:</strong>
+  <input type="checkbox" <%= argument %>></a>
+  <label class="container"><%= status %>
+    <span class="checkmark"></span>
+  </label>
+  </form>
+</p>
+
+<%= link_to "List all", tasks_path %>
+<%= link_to "Edit", tasks_edit_path %>
+<%= link_to "Delete",  task_path(@task), method: :delete, data: { confirm: "Are you sure?" }%>
