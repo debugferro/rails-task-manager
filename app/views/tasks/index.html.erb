@@ -1,11 +1,19 @@
 <ul>
   <% @tasks.each do |task| %>
-    <% argument = 'checked="checked"' if task.completed %>
   <li>
-    <input type="checkbox" <%= argument %>>
     <label class="container">
-      <%= link_to "#{task.title}", task_path(task.id) %>
-      <span class="checkmark"></span>
+      <!-- Looping over the tasks to create interative checkbox -->
+
+      <%= form_for task, url: task_path(task.id), action: "update" do |f| %>
+        <!-- javascript code to submit when clicking on checkbox -->
+        <% js_code = "document.getElementById('edit_task_#{task.id}').submit();" %>
+        <%= f.check_box(:completed, onchange: js_code) %>
+        <%= link_to "#{task.title}", task_path(task.id) %>
+        <!-- field tag to pass information about the redirection after submit -->
+        <%= hidden_field_tag 'redirection', 'home' %>
+        <%= f.submit "Done", id: 'hidden' %>
+      <% end %>
+
     </label>
   </li>
   <% end %>
